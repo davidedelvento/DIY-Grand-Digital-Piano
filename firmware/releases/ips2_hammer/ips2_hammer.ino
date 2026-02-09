@@ -168,6 +168,7 @@ void setup(void) {
   delay(1000);
   Tft.Clear();
 
+  Serial.println("Press 0 to enter parameter edit mode.");
 }
 
 // After startup, wait before sending anything to MIDI
@@ -194,8 +195,60 @@ float damper_position[NUM_CHANNELS], hammer_position[NUM_CHANNELS],
 hammer_position_uncal[NUM_CHANNELS];
 float damper_velocity[NUM_CHANNELS], hammer_velocity[NUM_CHANNELS];
 
+int input_field = -1;
+float input_data;
+bool keep_reading = true;
+bool edit_mode = false;
+
 void loop() {
 
+  if (Serial.available() > 0) {
+    input_field = Serial.parseInt();
+    if (input_field == 0) {
+      Serial.println("Entered parameter editing mode.");
+      Serial.println("Which parameter would you like to edit?");
+      Serial.println("0. NONE, done editing, resume normal operations");
+      Serial.println("1. damper_threshold");
+      edit_mode = true;
+      while (edit_mode) {
+        if (Serial.available() > 0) {
+          input_field = Serial.parseInt();
+          switch (input_field) {
+            case 0:
+              // taken care of later
+              break;
+            case 1:
+              Serial.print("Enter damper_threshold, currently ");
+              Serial.println(Set.damper_threshold);
+              keep_reading = true;
+              while (keep_reading) {
+                if (Serial.available() > 0) {
+                  input_data = Serial.parseFloat();
+                  Set.damper_threshold = input_data;
+                  Serial.print("Set damper_threshold = ");
+                  Serial.println(Set.damper_threshold);
+                  keep_reading = false;
+                }
+                delay(50);
+              }
+              break;
+            default:
+              Serial.print("Case ");
+              Serial.print(input_field);
+              Serial.println(" not supported");
+              Serial.println("Which parameter would you like to edit?");
+              Serial.println("0. NONE, done editing, resume normal operations");
+              Serial.println("1. damper_threshold");
+              break;
+          }
+          if (input_field == 0) {
+            edit_mode = false;
+          }
+        }
+        delay(50);
+      }  // EDITING loop
+    }    // input_mode note EDITING
+  }      // no Serial.available
   Tmg.WarnOnProcessingInterval();
   HStat.DisplayProcessingIntervalStart();
 

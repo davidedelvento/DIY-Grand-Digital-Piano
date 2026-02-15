@@ -168,7 +168,7 @@ void setup(void) {
   delay(1000);
   Tft.Clear();
 
-  Serial.println("Press 0 to enter parameter edit mode.");
+  Serial.println("Press 1 to enter parameter edit mode.");
 }
 
 // After startup, wait before sending anything to MIDI
@@ -200,11 +200,11 @@ float input_data;
 bool keep_reading = true;
 bool edit_mode = false;
 
-void loop() {
+void edit_parameters() {
+  // effectively "infinite" timeout (~ 1 month) when waiting for input
+  // in this function (parameter editing mode)
 
-  if (Serial.available() > 0) {
-    input_field = Serial.parseInt();
-    if (input_field == 0) {
+  Serial.setTimeout(2073600000L);
       Serial.println("Entered parameter editing mode.");
       Serial.println("Which parameter would you like to edit?");
       Serial.println("0. NONE, done editing, resume normal operations");
@@ -247,8 +247,19 @@ void loop() {
         }
         delay(50);
       }  // EDITING loop
-    }    // input_mode note EDITING
-  }      // no Serial.available
+  // restore default timeout outside of parameter editing mode
+  Serial.setTimeout(1000L);
+}
+
+void loop() {
+
+  if (Serial.available() > 0) {
+    input_field = Serial.parseInt(); // defaults to zero if times out
+    if (input_field == 1) {
+      edit_parameters();
+    }
+  }
+
   Tmg.WarnOnProcessingInterval();
   HStat.DisplayProcessingIntervalStart();
 

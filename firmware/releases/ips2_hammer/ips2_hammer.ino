@@ -73,6 +73,13 @@ uint8_t Midi_Buffer[MIDI_BUFFER_SIZE];
 
 void setup(void) {
 
+  // Load the settings. Must be first in the setup() function.
+  Set.SetAllSettingValues();
+
+  partial_setup();
+}
+
+void partial_setup(void) {
   // Serial port setup.
   Serial.begin(9600);
   Serial.println(".");
@@ -92,9 +99,6 @@ void setup(void) {
   Serial.println("https://github.com/stem-piano");
   Serial.println(".");
   Serial.println(".");
-
-  // Load the settings. Must be first in the setup() function.
-  Set.SetAllSettingValues();
 
   // Notification messages.
   if (Set.debug_level >= DEBUG_INFO) {
@@ -240,7 +244,7 @@ void edit_parameters() {
 
   // re-run the set up with the changed values (may be unnecessary)
   Serial.println("Setting up the board with your changes")
-  setup();
+  partial_setup();
 }
 
 void loop() {

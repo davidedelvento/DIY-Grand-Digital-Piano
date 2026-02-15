@@ -212,7 +212,23 @@ void edit_parameters() {
   while (keep_editing) {
     Serial.println("Which parameter would you like to edit?");
     Serial.println("0. NONE, done editing, resume normal operations");
-    Serial.println("1. damper_threshold");
+    Serial.println("1. debug_level");
+    Serial.println("2. sensor_v_max");
+    Serial.println("3. adc_reference");
+    Serial.println("4. adc_global_scale");
+    Serial.println("5. velocity_scale");
+    Serial.println("6. calibration_threshold");
+    Serial.println("7. damper_threshold");
+    Serial.println("8. damper_velocity_scaling");
+    Serial.println("9. hammer_strike_algorithm");
+    Serial.println("10. strike_threshold");
+    Serial.println("11. release_threshold");
+    Serial.println("12. min_repetition_seconds");
+    Serial.println("13. min_strike_velocity");
+    Serial.println("14. hammer_travel_meters");
+    Serial.println("15. pedal_threshold");
+    Serial.println("16. canbus_enable");
+
     if (Serial.available() > 0) {
       input_field = Serial.parseInt();
       switch (input_field) {
@@ -220,12 +236,121 @@ void edit_parameters() {
            // taken care of later
           break;
         case 1:
+          // debug_level is INTEGER!
+          Serial.print("Enter debug_level, currently ");
+          Serial.println(Set.debug_level);
+          Set.debug_level = Serial.parseInt();
+          Serial.print("Set debug_level = ");
+          Serial.println(Set.debug_level);
+          break;
+        case 2:
+          Serial.print("Enter sensor_v_max, currently ");
+          Serial.println(Set.sensor_v_max);
+          Set.sensor_v_max = Serial.parseFloat();
+          Serial.print("Set sensor_v_max = ");
+          Serial.println(Set.sensor_v_max);
+          break;
+        case 3:
+          Serial.print("Enter adc_reference, currently ");
+          Serial.println(Set.adc_reference);
+          Set.adc_reference = Serial.parseFloat();
+          Serial.print("Set adc_reference = ");
+          Serial.println(Set.adc_reference);
+          break;
+        case 4:
+          Serial.print("Enter adc_global_scale, currently ");
+          Serial.println(Set.adc_global_scale);
+          Set.adc_global_scale = Serial.parseFloat();
+          Serial.print("Set adc_global_scale = ");
+          Serial.println(Set.adc_global_scale);
+          break;
+        case 5:
+          Serial.print("Enter velocity_scale, currently ");
+          Serial.println(Set.velocity_scale);
+          Set.velocity_scale = Serial.parseFloat();
+          Serial.print("Set velocity_scale = ");
+          Serial.println(Set.velocity_scale);
+          break;
+        case 6:
+          Serial.print("Enter calibration_threshold, currently ");
+          Serial.println(Set.calibration_threshold);
+          Set.calibration_threshold = Serial.parseFloat();
+          Serial.print("Set calibration_threshold = ");
+          Serial.println(Set.calibration_threshold);
+          break;
+        case 7:
           Serial.print("Enter damper_threshold, currently ");
           Serial.println(Set.damper_threshold);
           Set.damper_threshold = Serial.parseFloat();
           Serial.print("Set damper_threshold = ");
           Serial.println(Set.damper_threshold);
           break;
+        case 8:
+          Serial.print("Enter damper_velocity_scaling, currently ");
+          Serial.println(Set.damper_velocity_scaling);
+          Set.damper_velocity_scaling = Serial.parseFloat();
+          Serial.print("Set damper_velocity_scaling = ");
+          Serial.println(Set.damper_velocity_scaling);
+          break;
+        case 9:
+          // hammer_strike_algorithm is INTEGER!
+          Serial.print("Enter , currently ");
+          Serial.println(Set.);
+          Set. = Serial.parseInt();
+          Serial.print("Set  = ");
+          Serial.println(Set.);
+          break;
+        case 10:
+          Serial.print("Enter strike_threshold, currently ");
+          Serial.println(Set.strike_threshold);
+          Set.strike_threshold = Serial.parseFloat();
+          Serial.print("Set strike_threshold = ");
+          Serial.println(Set.strike_threshold);
+          break;
+        case 11:
+          Serial.print("Enter release_threshold, currently ");
+          Serial.println(Set.release_threshold);
+          Set.release_threshold = Serial.parseFloat();
+          Serial.print("Set release_threshold = ");
+          Serial.println(Set.release_threshold);
+          break;
+        case 12:
+          Serial.print("Enter min_repetition_seconds, currently ");
+          Serial.println(Set.min_repetition_seconds);
+          Set.min_repetition_seconds = Serial.parseFloat();
+          Serial.print("Set min_repetition_seconds = ");
+          Serial.println(Set.min_repetition_seconds);
+          break;
+        case 13:
+          Serial.print("Enter min_strike_velocity, currently ");
+          Serial.println(Set.min_strike_velocity);
+          Set.min_strike_velocity = Serial.parseFloat();
+          Serial.print("Set min_strike_velocity = ");
+          Serial.println(Set.min_strike_velocity);
+          break;
+        case 14:
+          Serial.print("Enter hammer_travel_meters, currently ");
+          Serial.println(Set.hammer_travel_meters);
+          Set.hammer_travel_meters = Serial.parseFloat();
+          Serial.print("Set hammer_travel_meters = ");
+          Serial.println(Set.hammer_travel_meters);
+          break;
+        case 15:
+          Serial.print("Enter pedal_threshold, currently ");
+          Serial.println(Set.pedal_threshold);
+          Set.pedal_threshold = Serial.parseFloat();
+          Serial.print("Set pedal_threshold = ");
+          Serial.println(Set.pedal_threshold);
+          break;
+        case 16:
+          // canbus_enable is INTEGER!
+          Serial.print("Enter canbus_enable, currently ");
+          Serial.println(Set.canbus_enable);
+          Set.canbus_enable = Serial.parseFloat();
+          Serial.print("Set canbus_enable = ");
+          Serial.println(Set.canbus_enable);
+          break;
+
         default:
           Serial.print("Case ");
           Serial.print(input_field);

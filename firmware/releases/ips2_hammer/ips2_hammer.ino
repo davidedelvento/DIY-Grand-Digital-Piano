@@ -294,11 +294,11 @@ void edit_parameters() {
           break;
         case 9:
           // hammer_strike_algorithm is INTEGER!
-          Serial.print("Enter , currently ");
-          Serial.println(Set.);
-          Set. = Serial.parseInt();
-          Serial.print("Set  = ");
-          Serial.println(Set.);
+          Serial.print("Enter hammer_strike_algorithm, currently ");
+          Serial.println(Set.hammer_strike_algorithm);
+          Set.hammer_strike_algorithm = Serial.parseInt();
+          Serial.print("Set hammer_strike_algorithm = ");
+          Serial.println(Set.hammer_strike_algorithm);
           break;
         case 10:
           Serial.print("Enter strike_threshold, currently ");
@@ -368,7 +368,7 @@ void edit_parameters() {
   Serial.setTimeout(1000L);
 
   // re-run the set up with the changed values (may be unnecessary)
-  Serial.println("Setting up the board with your changes")
+  Serial.println("Setting up the board with your changes");
   partial_setup();
 }
 

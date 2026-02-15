@@ -197,8 +197,7 @@ float damper_velocity[NUM_CHANNELS], hammer_velocity[NUM_CHANNELS];
 
 int input_field = -1;
 float input_data;
-bool keep_reading = true;
-bool edit_mode = false;
+bool keep_editing = false;
 
 void edit_parameters() {
   // effectively "infinite" timeout (~ 1 month) when waiting for input
@@ -206,11 +205,11 @@ void edit_parameters() {
 
   Serial.setTimeout(2073600000L);
   Serial.println("Entered parameter editing mode.");
-  Serial.println("Which parameter would you like to edit?");
-  Serial.println("0. NONE, done editing, resume normal operations");
-  Serial.println("1. damper_threshold");
-  edit_mode = true;
-  while (edit_mode) {
+  keep_editing = true;
+  while (keep_editing) {
+    Serial.println("Which parameter would you like to edit?");
+    Serial.println("0. NONE, done editing, resume normal operations");
+    Serial.println("1. damper_threshold");
     if (Serial.available() > 0) {
       input_field = Serial.parseInt();
       switch (input_field) {
@@ -236,13 +235,10 @@ void edit_parameters() {
           Serial.print("Case ");
           Serial.print(input_field);
           Serial.println(" not supported");
-          Serial.println("Which parameter would you like to edit?");
-          Serial.println("0. NONE, done editing, resume normal operations");
-          Serial.println("1. damper_threshold");
           break;
       }
       if (input_field == 0) {
-        edit_mode = false;
+        keep_editing = false;
       }
     }
     delay(50);

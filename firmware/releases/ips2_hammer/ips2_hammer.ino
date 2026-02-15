@@ -237,6 +237,10 @@ void edit_parameters() {
 
   // restore default timeout outside of parameter editing mode
   Serial.setTimeout(1000L);
+
+  // re-run the set up with the changed values (may be unnecessary)
+  Serial.println("Setting up the board with your changes")
+  setup();
 }
 
 void loop() {

@@ -205,48 +205,48 @@ void edit_parameters() {
   // in this function (parameter editing mode)
 
   Serial.setTimeout(2073600000L);
-      Serial.println("Entered parameter editing mode.");
-      Serial.println("Which parameter would you like to edit?");
-      Serial.println("0. NONE, done editing, resume normal operations");
-      Serial.println("1. damper_threshold");
-      edit_mode = true;
-      while (edit_mode) {
-        if (Serial.available() > 0) {
-          input_field = Serial.parseInt();
-          switch (input_field) {
-            case 0:
-              // taken care of later
-              break;
-            case 1:
-              Serial.print("Enter damper_threshold, currently ");
+  Serial.println("Entered parameter editing mode.");
+  Serial.println("Which parameter would you like to edit?");
+  Serial.println("0. NONE, done editing, resume normal operations");
+  Serial.println("1. damper_threshold");
+  edit_mode = true;
+  while (edit_mode) {
+    if (Serial.available() > 0) {
+      input_field = Serial.parseInt();
+      switch (input_field) {
+        case 0:
+           // taken care of later
+          break;
+        case 1:
+          Serial.print("Enter damper_threshold, currently ");
+          Serial.println(Set.damper_threshold);
+          keep_reading = true;
+          while (keep_reading) {
+            if (Serial.available() > 0) {
+              input_data = Serial.parseFloat();
+              Set.damper_threshold = input_data;
+              Serial.print("Set damper_threshold = ");
               Serial.println(Set.damper_threshold);
-              keep_reading = true;
-              while (keep_reading) {
-                if (Serial.available() > 0) {
-                  input_data = Serial.parseFloat();
-                  Set.damper_threshold = input_data;
-                  Serial.print("Set damper_threshold = ");
-                  Serial.println(Set.damper_threshold);
-                  keep_reading = false;
-                }
-                delay(50);
-              }
-              break;
-            default:
-              Serial.print("Case ");
-              Serial.print(input_field);
-              Serial.println(" not supported");
-              Serial.println("Which parameter would you like to edit?");
-              Serial.println("0. NONE, done editing, resume normal operations");
-              Serial.println("1. damper_threshold");
-              break;
+              keep_reading = false;
+            }
+            delay(50);
           }
-          if (input_field == 0) {
-            edit_mode = false;
-          }
-        }
-        delay(50);
-      }  // EDITING loop
+          break;
+        default:
+          Serial.print("Case ");
+          Serial.print(input_field);
+          Serial.println(" not supported");
+          Serial.println("Which parameter would you like to edit?");
+          Serial.println("0. NONE, done editing, resume normal operations");
+          Serial.println("1. damper_threshold");
+          break;
+      }
+      if (input_field == 0) {
+        edit_mode = false;
+      }
+    }
+    delay(50);
+  }  // EDITING loop
   // restore default timeout outside of parameter editing mode
   Serial.setTimeout(1000L);
 }

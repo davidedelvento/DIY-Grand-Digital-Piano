@@ -136,6 +136,7 @@ void partial_setup(void) {
   delay(1000);
   Tft.Clear();
 
+  Serial.println("Press 1 to enter parameter edit mode.");
 }
 
 // After startup, wait before sending anything to MIDI
@@ -249,6 +250,13 @@ void edit_parameters() {
 }
 
 void loop() {
+
+  if (Serial.available() > 0) {
+    input_field = Serial.parseInt(); // defaults to zero if times out
+    if (input_field == 1) {
+      edit_parameters();
+    }
+  }
 
   Tmg.WarnOnProcessingInterval();
   DStat.DisplayProcessingIntervalStart();
